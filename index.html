@@ -1,0 +1,231 @@
+<!DOCTYPE html><html lang="uz"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Lingua — Ingliz tili</title>
+<style>
+:root{--bg:#0f1226;--card:#1b1f3b;--tx:#f1f3ff;--mu:#9aa0c8;--ac:#7c5cff;--ac2:#22d3ee;--ok:#34d399;--bad:#f87171;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f4f5ff;--card:#fff;--tx:#161a3a;--mu:#5d638f}}
+:root[data-theme="light"]{--bg:#f4f5ff;--card:#fff;--tx:#161a3a;--mu:#5d638f}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+.w{max-width:960px;margin:auto;padding:16px}
+header{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.logo{font-weight:800;font-size:22px;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:10px 16px;background:var(--ac);color:#fff;font-weight:600}
+button.g{background:var(--card);color:var(--tx);border:1px solid #7c5cff44}
+button.on{background:linear-gradient(90deg,var(--ac),var(--ac2))}
+input,textarea{width:100%;font:inherit;padding:10px 12px;border-radius:12px;border:1px solid #7c5cff55;background:var(--card);color:var(--tx)}
+.card{background:var(--card);border-radius:18px;padding:16px;margin:12px 0;border:1px solid #7c5cff22}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.hero{text-align:center;padding:36px 8px}.hero h1{font-size:clamp(28px,6vw,44px);margin:0 0 8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.lv{padding:22px;cursor:pointer;text-align:left}.lv b{font-size:20px}
+.mu{color:var(--mu);font-size:14px}
+.t{overflow-x:auto}table{border-collapse:collapse;width:100%}td,th{padding:8px;border-bottom:1px solid #7c5cff22;text-align:left}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;background:var(--card);color:var(--tx);border:1px solid #7c5cff44}
+.opt.ok{background:var(--ok);color:#052}.opt.no{background:var(--bad);color:#400}
+.ans{display:none;margin-top:8px;padding:10px;border-radius:12px;background:#7c5cff1a}
+.tag{display:inline-block;background:#22d3ee22;border-radius:8px;padding:2px 8px;margin:2px;font-size:13px}
+#sec{position:fixed;inset:0;background:var(--bg);z-index:9;overflow:auto;padding:max(16px,env(safe-area-inset-top,0px)) 16px max(16px,env(safe-area-inset-bottom,0px));display:none}
+.cell{width:84px;height:84px;font-size:38px;background:var(--card);color:var(--tx);border:1px solid #7c5cff55}
+#log{height:200px;overflow:auto}
+.ai{white-space:pre-wrap}.fm{display:flex;gap:10px;align-items:center;margin:6px 0;padding:8px;border-radius:12px;background:#7c5cff14;font-weight:600}.fm b{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;color:#fff;flex:none}.gt th{color:#fff;text-align:center}
+</style></head><body><div class="w">
+<header><div class="logo">🌍 Lingua</div><div><button class="g" id="home">Bosh sahifa</button> <button id="prem">⭐ Premium</button></div></header>
+<main id="app"></main></div>
+<div id="sec"><div class="w"><div class="row" style="justify-content:space-between"><h2 style="margin:0">🔒 Maxfiy xona</h2><button class="g" id="leave">Chiqish</button></div><div id="secbody"></div></div></div>
+<script>
+const $=s=>document.querySelector(s),A=$('#app');
+const LV={beginner:'Beginner (A1)',elementary:'Elementary (A2)',intermediate:'Intermediate (B1)'};
+const DATA={
+beginner:{
+vocab:[['Family / Oila','mother=ona;father=ota;brother=aka/uka;sister=opa/singil;grandmother=buvi;grandfather=bobo;parents=ota-ona;baby=chaqaloq'],['Daily routine / Kundalik ish','wake up=uyg\'onmoq;wash=yuvinmoq;breakfast=nonushta;school=maktab;homework=uy vazifasi;sleep=uxlamoq;always=doim;usually=odatda']],
+writing:['Write 5 sentences about your family. (Oilangiz haqida 5 gap yozing.) Start: "I have a big family."','Describe your morning. Use: wake up, wash, eat, go. Masalan: "I wake up at 7."'],
+grammar:[['Present Continuous','Hozir, aynan shu payt bo\'layotgan ishlar uchun ishlatiladi (actions happening right now).',[['He ___ a car now.',['drives','is driving','drive'],1],['They ___ food now.',['is cooking','are cooking','cooks'],1]],['am / is / are + verb-ing',"Subject + am / is / are + not + verb-ing",'Am / Is / Are + subject + verb-ing?',[['I am playing.',"I'm not playing.",'Am I playing?'],['You are reading.',"You're not reading.",'Are you reading?'],['He is driving.',"He isn't driving.",'Is he driving?'],['She is running.',"She isn't running.",'Is she running?'],['It is barking.',"It isn't barking.",'Is it barking?'],['We are watching.',"We aren't watching.",'Are we watching?'],['They are cooking.',"They aren't cooking.",'Are they cooking?']]]],['To be: am / is / are','I → am, he/she/it → is, you/we/they → are. Masalan: I am a student. She is tall. They are friends.',[['She ___ a teacher.',['am','is','are'],1],['We ___ from Uzbekistan.',['is','am','are'],2]],['am / is / are','Subject + am / is / are + not','Am / Is / Are + subject?',[['I am a student.',"I'm not a student.",'Am I a student?'],['She is tall.',"She isn't tall.",'Is she tall?'],['They are friends.',"They aren't friends.",'Are they friends?']]]],['Articles: a / an','Undosh tovushdan oldin "a" (a book), unli tovushdan oldin "an" (an apple).',[['I have ___ orange.',['a','an','the'],1],['He is ___ doctor.',['an','a','—'],1]]],['Present Simple','Odatiy ish: I/you/we/they + fe\'l; he/she/it + fe\'l+s. Masalan: She likes tea.',[['He ___ football every day.',['play','plays','playing'],1],['I ___ milk.',['drinks','drink','drinking'],1]],['verb (he/she/it + s)',"Subject + don't / doesn't + verb",'Do / Does + subject + verb?',[['I play football.',"I don't play football.",'Do I play football?'],['She likes tea.',"She doesn't like tea.",'Does she like tea?'],['They work here.',"They don't work here.",'Do they work here?']]]]],
+speak:[['🍎 Food / Taomlar',['What is your favorite food?|Sevimli taomingiz nima?|My favorite food is plov.|favorite=sevimli,food=taom','Do you like fruit?|Siz mevani yoqtirasizmi?|Yes, I do. I like apples.|fruit=meva,apple=olma','What do you eat for breakfast?|Nonushtada nima yeysiz?|I eat bread and eggs.|breakfast=nonushta,bread=non,egg=tuxum','What do you drink in the morning?|Ertalab nima ichasiz?|I drink tea.|drink=ichmoq,tea=choy','Can you cook?|Pishira olasizmi?|Yes, I can cook soup.|cook=pishirmoq,soup=sho\'rva','Do you like spicy food?|Achchiq taomni yoqtirasizmi?|No, I don\'t. It is too hot.|spicy=achchiq,hot=issiq/achchiq','Where do you buy food?|Ovqatni qayerdan olasiz?|I buy food at the market.|buy=sotib olmoq,market=bozor','What is your favorite drink?|Sevimli ichimligingiz nima?|I like orange juice.|juice=sharbat','Do you like sweets?|Shirinliklarni yoqtirasizmi?|Yes, I like chocolate and cake.|sweets=shirinlik,cake=tort','What do you have for dinner?|Kechki ovqatga nima yeysiz?|I have rice and meat.|dinner=kechki ovqat,rice=guruch,meat=go\'sht']],
+['🐶 Animals / Hayvonlar',['What is your favorite animal?|Sevimli hayvoningiz qaysi?|My favorite animal is a cat.|animal=hayvon','Do you have a pet?|Uy hayvoningiz bormi?|Yes, I have a dog.|pet=uy hayvoni,dog=it','What color is your cat?|Mushugingiz rangi qanday?|It is white.|color=rang,white=oq','Is a lion big or small?|Sher kattami yoki kichik?|A lion is big and strong.|lion=sher,strong=kuchli','Can birds fly?|Qushlar ucha oladimi?|Yes, they can fly.|bird=qush,fly=uchmoq','What does a cow give us?|Sigir bizga nima beradi?|A cow gives us milk.|cow=sigir,milk=sut','Where do fish live?|Baliqlar qayerda yashaydi?|Fish live in water.|fish=baliq,water=suv','Which animal is fast?|Qaysi hayvon tez?|A horse is fast.|horse=ot,fast=tez','Are you afraid of snakes?|Ilonlardan qo\'rqasizmi?|Yes, I am afraid of snakes.|afraid=qo\'rqmoq,snake=ilon','Do you like the zoo?|Hayvonot bog\'ini yoqtirasizmi?|Yes, I like to see elephants.|zoo=hayvonot bog\'i,elephant=fil']]]},
+elementary:{
+vocab:[['Travel / Sayohat','ticket=chipta;airport=aeroport;luggage=yuk;passport=pasport;hotel=mehmonxona;map=xarita;tourist=sayyoh;journey=safar']],
+writing:['Write about your last holiday (5–6 sentences). Use Past Simple: went, saw, ate.'],
+grammar:[['Past Simple','Tugagan ish: fe\'l+ed (played) yoki noto\'g\'ri fe\'l (go → went). Inkor: didn\'t + fe\'l.',[['Yesterday I ___ to the park.',['go','went','goed'],1],['She ___ TV last night.',['watched','watch','watches'],0]]],['Present Continuous','Hozir bo\'layotgan ish: am/is/are + fe\'l+ing. I am reading now.',[['They ___ football now.',['play','are playing','played'],1]]],['There is / There are','Birlik: There is a book. Ko\'plik: There are two books.',[['There ___ three chairs.',['is','are','am'],1]]]],
+speak:[['✈️ Travel / Sayohat',['Where did you go last summer?|O\'tgan yozda qayerga bordingiz?|I went to Samarkand with my family.|last summer=o\'tgan yoz','How do you usually travel?|Odatda qanday sayohat qilasiz?|I usually travel by train.|usually=odatda,train=poyezd','What do you pack in your bag?|Sumkangizga nima solasiz?|I pack clothes and a camera.|pack=joylamoq,camera=fotoapparat','Do you like staying in hotels?|Mehmonxonada qolishni yoqtirasizmi?|Yes, they are comfortable.|comfortable=qulay','Which country do you want to visit?|Qaysi mamlakatga bormoqchisiz?|I want to visit Japan.|visit=borib ko\'rmoq']]]},
+intermediate:{
+vocab:[['Work / Ish','employee=xodim;boss=rahbar;salary=maosh;deadline=muddat;meeting=yig\'ilish;experience=tajriba;apply=ariza topshirmoq;career=karyera']],
+writing:['Write an email (80–100 words) to apply for a job. Use polite phrases: "I would like to apply for…"'],
+grammar:[['Present Perfect','have/has + V3: tajriba yoki natijasi hozirga bog\'liq ish. I have visited Turkey.',[['She ___ already finished.',['has','have','is'],0],['I have never ___ sushi.',['eat','ate','eaten'],2]]],['First Conditional','If + Present, will + fe\'l: haqiqiy ehtimol. If it rains, we will stay home.',[['If you study, you ___ pass.',['will','would','did'],0]]],['Modal verbs','must (majburiy), should (maslahat), might (ehtimol). You should sleep more.',[['You ___ wear a seatbelt. It is the law.',['might','must','could'],1]]]],
+speak:[['💼 Work / Ish',['What do you do for a living?|Kasbingiz nima?|I work as a designer.|living=turmush tarzi/kasb','What are your strengths?|Kuchli tomonlaringiz?|I am organized and I learn quickly.|strengths=kuchli tomonlar,organized=tartibli','Do you prefer working alone or in a team?|Yolg\'iz yoki jamoada ishlashni afzal ko\'rasizmi?|I prefer a team because we share ideas.|prefer=afzal ko\'rmoq','Where do you see yourself in five years?|5 yildan keyin o\'zingizni qayerda ko\'rasiz?|I hope to be a manager.|manager=menejer','How do you handle stress?|Stressni qanday yengasiz?|I take a walk and plan my tasks.|handle=bartaraf etmoq']]]}};
+const RAW=`##👋 Greetings & About Me
+What is your name?|Ismingiz nima?|My name is Ali.|name=ism
+How are you?|Qandaysiz?|I am fine, thank you.|fine=yaxshi
+How old are you?|Necha yoshdasiz?|I am 15 years old.|old=yosh
+Where are you from?|Qayerdansiz?|I am from Tashkent.|from=...dan
+Where do you live?|Qayerda yashaysiz?|I live in Samarkand.|live=yashamoq
+What do you do?|Nima ish qilasiz?|I am a student.|student=o'quvchi
+Nice to meet you!|Tanishganimdan xursandman!|Nice to meet you too!|meet=uchrashmoq
+What languages do you speak?|Qaysi tillarda gapirasiz?|I speak Uzbek and English.|language=til,speak=gapirmoq
+What is your phone number?|Telefon raqamingiz nima?|It is 90 123 45 67.|number=raqam
+How do you say goodbye?|Xayrlashishni qanday aytasiz?|I say "See you later!"|goodbye=xayr,later=keyinroq
+##👨‍👩‍👧 Family
+How many people are in your family?|Oilangizda necha kishi bor?|There are five people.|people=odamlar
+Who is the oldest in your family?|Oilada kim eng katta?|My grandfather is the oldest.|oldest=eng katta,grandfather=bobo
+Do you have brothers or sisters?|Aka-uka yoki opa-singillaringiz bormi?|Yes, I have one brother.|brother=aka/uka,sister=opa/singil
+What is your mother's name?|Onangizning ismi nima?|Her name is Malika.|mother=ona
+What does your father do?|Otangiz nima ish qiladi?|He is a driver.|father=ota,driver=haydovchi
+Do you live with your grandparents?|Bobo-buvingiz bilan yashaysizmi?|No, they live in a village.|grandparents=bobo-buvi,village=qishloq
+Who do you look like?|Kimga o'xshaysiz?|I look like my mother.|look like=o'xshamoq
+Do you have a big family?|Oilangiz kattami?|Yes, we are a big family.|big=katta
+Who cooks in your family?|Oilada kim ovqat pishiradi?|My mother cooks.|cook=pishirmoq
+What do you do with your family?|Oila bilan nima qilasiz?|We watch TV together.|together=birga
+##🏠 Home
+Where do you live?|Qayerda yashaysiz?|I live in a flat.|flat=kvartira
+How many rooms are there in your home?|Uyingizda nechta xona bor?|There are four rooms.|room=xona
+What is your favorite room?|Sevimli xonangiz qaysi?|My favorite room is my bedroom.|bedroom=yotoqxona
+What is in your kitchen?|Oshxonangizda nima bor?|There is a table and a fridge.|kitchen=oshxona,fridge=muzlatgich
+Do you have a garden?|Bog'ingiz bormi?|Yes, we have a small garden.|garden=bog'
+Is your home big or small?|Uyingiz kattami yoki kichik?|It is small but cozy.|cozy=shinam
+Who cleans your home?|Uyni kim tozalaydi?|My mother and I clean it.|clean=tozalamoq
+What is in your bedroom?|Yotoqxonangizda nima bor?|There is a bed and a desk.|bed=karavot,desk=stol
+Where do you watch TV?|Televizorni qayerda ko'rasiz?|I watch TV in the living room.|living room=mehmonxona
+Do you like your home?|Uyingiz yoqadimi?|Yes, I love it.|love=yaxshi ko'rmoq
+##🎨 Things I Like
+What color do you like?|Qaysi rangni yoqtirasiz?|I like blue.|color=rang,blue=ko'k
+What is your favorite subject?|Sevimli fanigiz nima?|I like English.|subject=fan
+What is your favorite sport?|Sevimli sport turingiz?|I like football.|sport=sport
+What music do you like?|Qanday musiqani yoqtirasiz?|I like pop music.|music=musiqa
+Do you like movies?|Filmlarni yoqtirasizmi?|Yes, I like comedies.|movie=film,comedy=komediya
+What is your favorite season?|Sevimli faslingiz?|I like spring.|season=fasl,spring=bahor
+Do you like reading books?|Kitob o'qishni yoqtirasizmi?|Yes, I like stories.|story=hikoya
+What is your favorite day?|Sevimli kuningiz?|I like Saturday.|day=kun
+Do you like games?|O'yinlarni yoqtirasizmi?|Yes, I like chess.|game=o'yin,chess=shaxmat
+What is your favorite number?|Sevimli raqamingiz?|My favorite number is seven.|number=raqam
+##⛅ Weather
+What is the weather like today?|Bugun ob-havo qanday?|It is sunny.|weather=ob-havo,sunny=quyoshli
+Is it cold today?|Bugun sovuqmi?|No, it is warm.|cold=sovuq,warm=iliq
+Is it raining?|Yomg'ir yog'yaptimi?|Yes, it is raining.|rain=yomg'ir
+What is your favorite weather?|Sevimli ob-havoingiz?|I like sunny weather.|favorite=sevimli
+Does it snow in your city?|Shahringizda qor yog'adimi?|Yes, in winter.|snow=qor,winter=qish
+What is the weather like in summer?|Yozda ob-havo qanday?|It is hot.|hot=issiq
+Is it windy today?|Bugun shamolmi?|Yes, it is a little windy.|windy=shamolli
+What do you wear in winter?|Qishda nima kiyasiz?|I wear a coat and a hat.|wear=kiymoq,coat=palto
+What do you do on a rainy day?|Yomg'irli kunda nima qilasiz?|I stay at home and read.|rainy=yomg'irli,stay=qolmoq
+Do you like cloudy days?|Bulutli kunlarni yoqtirasizmi?|No, I like sunny days.|cloudy=bulutli
+##🎉 Free Time & Hobbies
+What do you do in your free time?|Bo'sh vaqtda nima qilasiz?|I read books.|free time=bo'sh vaqt
+What is your hobby?|Hobbingiz nima?|My hobby is drawing.|hobby=hobbi
+Do you play sports?|Sport bilan shug'ullanasizmi?|Yes, I play volleyball.|volleyball=voleybol
+Do you like music?|Musiqani yoqtirasizmi?|Yes, I listen to music daily.|listen=tinglamoq
+Do you go out with friends?|Do'stlar bilan sayr qilasizmi?|Yes, we go to the park.|park=bog'
+What do you do on weekends?|Dam olish kunlari nima qilasiz?|I visit my grandparents.|weekend=dam olish kunlari,visit=borib ko'rmoq
+Do you play computer games?|Kompyuter o'yinlarini o'ynaysizmi?|Sometimes.|sometimes=ba'zan
+How often do you read?|Qanchalik tez-tez o'qiysiz?|I read every evening.|often=tez-tez,evening=kechqurun
+Do you like taking photos?|Rasmga olishni yoqtirasizmi?|Yes, with my phone.|photo=surat
+Who do you spend free time with?|Bo'sh vaqtni kim bilan o'tkazasiz?|I spend it with my friends.|spend=o'tkazmoq
+`.split('##').filter(Boolean).map(b=>{const l=b.trim().split('\n');return[l[0],l.slice(1)]});
+const V=[['swimming','suzish'],['cooking','ovqat pishirish'],['drawing','rasm chizish'],['singing',"qo'shiq aytish"],['dancing','raqs tushish'],['running','yugurish'],['reading',"kitob o'qish"],['writing','yozish'],['driving','mashina haydash'],['playing chess',"shaxmat o'ynash"]];
+const vt=(t,f)=>[t,V.map(([g,u])=>f(g,u)+'|'+g+'='+u)];
+const HG=[['a car','mashina'],['a pet','uy hayvoni'],['a brother','aka yoki uka'],['a bike','velosiped'],['a phone','telefon'],['a laptop','noutbuk'],['a sister','opa yoki singil'],['a garden',"bog'"],['a dog','it'],['a watch','soat']];
+const SP=DATA.beginner.speak;SP.splice(1,0,...RAW.slice(0,5));
+SP.push(RAW[5],
+vt('💪 Be good at + V-ing',(g,u)=>`Are you good at ${g}?|Siz ${u}da yaxshimisiz?|Yes, I am good at ${g}.`),
+vt('😅 Be bad at + V-ing',(g,u)=>`Are you bad at ${g}?|Siz ${u}da yomonmisiz?|Yes, I am bad at ${g}. I need practice.`),
+vt('😋 Enjoy + V-ing',(g,u)=>`Do you enjoy ${g}?|Siz ${u}dan zavqlanasizmi?|Yes, I enjoy ${g}.`),
+vt('🧐 Be interested in + V-ing',(g,u)=>`Are you interested in ${g}?|Siz ${u}ga qiziqasizmi?|Yes, I am interested in ${g}.`),
+['🙋 Have you got...?',HG.map(([g,u])=>`Have you got ${g}?|Sizda ${u} bormi?|Yes, I have got ${g}.|${g.slice(2)}=${u}`)]);
+const RI=`##🔮 First Conditional
+What will you do if it rains tomorrow?|Ertaga yomg'ir yog'sa nima qilasiz?|If it rains, I will stay at home.|rain=yomg'ir yog'moq
+What will you do if you are tired?|Charchasangiz nima qilasiz?|If I am tired, I will sleep.|tired=charchagan
+What will you do if you win a prize?|Sovrin yutsangiz nima qilasiz?|If I win, I will celebrate.|win=yutmoq,prize=sovrin
+What will you do if you miss the bus?|Avtobusni o'tkazib yuborsangiz nima qilasiz?|If I miss it, I will take a taxi.|miss=o'tkazib yubormoq
+What will you do if you get a new job?|Yangi ish topsangiz nima qilasiz?|If I get it, I will move to a new city.|move=ko'chmoq
+What will you do if your friend calls?|Do'stingiz qo'ng'iroq qilsa nima qilasiz?|If he calls, I will answer.|call=qo'ng'iroq qilmoq
+What will you do if you have free time?|Bo'sh vaqtingiz bo'lsa nima qilasiz?|If I have free time, I will read.|free time=bo'sh vaqt
+What will you do if you forget your keys?|Kalitingizni unutsangiz nima qilasiz?|If I forget them, I will call my mother.|forget=unutmoq,key=kalit
+What will you do if it snows?|Qor yog'sa nima qilasiz?|If it snows, I will make a snowman.|snowman=qor odam
+What will happen if you don't study?|O'qimasangiz nima bo'ladi?|If I don't study, I will fail the exam.|fail=yiqilmoq,exam=imtihon
+##✅ Present Perfect
+Have you ever visited another country?|Hech boshqa mamlakatda bo'lganmisiz?|Yes, I have visited Turkey.|visit=borib ko'rmoq
+Have you ever eaten sushi?|Sushi yeb ko'rganmisiz?|No, I have never eaten it.|never=hech qachon
+Have you ever broken a bone?|Hech suyagingiz singanmi?|No, I haven't.|bone=suyak,break=sindirmoq
+Have you ever met a famous person?|Mashhur odam bilan uchrashganmisiz?|Yes, I have met a singer.|famous=mashhur
+Have you ever lost your phone?|Telefoningizni yo'qotganmisiz?|Yes, once.|lose=yo'qotmoq,once=bir marta
+Have you ever learned a new language?|Yangi til o'rganganmisiz?|Yes, I have learned English.|learn=o'rganmoq
+Have you ever flown in a plane?|Samolyotda uchganmisiz?|Yes, I have flown twice.|plane=samolyot,twice=ikki marta
+Have you ever cooked dinner alone?|Yolg'iz kechki ovqat pishirganmisiz?|Yes, many times.|alone=yolg'iz
+Have you ever been late for class?|Darsga kech qolganmisiz?|Yes, I have.|late=kech
+What have you done today?|Bugun nima qildingiz?|I have studied and cooked.|today=bugun
+##💡 Advice (should / must)
+What should you do if you feel sick?|O'zingizni yomon sezsangiz nima qilishingiz kerak?|I should see a doctor.|sick=kasal,doctor=shifokor
+What should you do before an exam?|Imtihon oldidan nima qilish kerak?|I should review my notes.|review=takrorlamoq
+What must you do in a car?|Mashinada nima qilish shart?|I must wear a seatbelt.|seatbelt=xavfsizlik kamari
+What should you eat to be healthy?|Sog'lom bo'lish uchun nima yeyish kerak?|I should eat vegetables.|healthy=sog'lom,vegetable=sabzavot
+What mustn't you do in class?|Darsda nima qilish mumkin emas?|I mustn't talk loudly.|loudly=baland ovozda
+Should people sleep eight hours?|Odamlar sakkiz soat uxlashi kerakmi?|Yes, they should.|hour=soat
+What might you do this weekend?|Bu dam olishda nima qilishingiz mumkin?|I might visit my friends.|might=...mumkin
+What should you do to learn English?|Ingliz tilini o'rganish uchun nima qilish kerak?|I should practice every day.|practice=mashq qilmoq
+Must students wear uniforms?|O'quvchilar forma kiyishi shartmi?|Yes, they must.|uniform=forma
+What shouldn't you do late at night?|Kechasi kech nima qilmaslik kerak?|I shouldn't drink coffee.|coffee=qahva
+`.split('##').filter(Boolean).map(b=>{const l=b.trim().split('\n');return[l[0],l.slice(1)]});
+const E=DATA.elementary,I=DATA.intermediate,T3=(a,b,c)=>[[a],[b],[c]];
+E.speak[0][1].push(...`What do you take to the airport?|Aeroportga nima olib borasiz?|I take my passport and ticket.|passport=pasport,ticket=chipta
+Do you prefer the sea or mountains?|Dengizni yoki tog'ni afzal ko'rasizmi?|I prefer the mountains.|mountain=tog',sea=dengiz
+Have you got a map?|Xaritangiz bormi?|Yes, it is in my bag.|map=xarita
+What souvenirs do you buy?|Qanday esdalik sovg'alar olasiz?|I buy magnets and postcards.|souvenir=esdalik sovg'a
+How was your last trip?|Oxirgi safaringiz qanday o'tdi?|It was great and very fun.|trip=safar,great=ajoyib`.split('\n'));
+const PS=[['watch TV',"televizor ko'rdingizmi",'watched TV'],['play football',"futbol o'ynadingizmi",'played football'],['go to school','maktabga bordingizmi','went to school'],['eat pizza','pitsa yedingizmi','ate pizza'],['read a book',"kitob o'qidingizmi",'read a book'],['visit a friend',"do'stingizni ko'rdingizmi",'visited a friend'],['cook dinner','kechki ovqat pishirdingizmi','cooked dinner'],['listen to music','musiqa tingladingizmi','listened to music'],['call your mother',"onangizga qo'ng'iroq qildingizmi",'called my mother'],['buy a gift',"sovg'a sotib oldingizmi",'bought a gift']];
+const TI=[['a bed','karavot'],['a desk','parta'],['a TV','televizor'],['a window','deraza'],['a lamp','lampa'],['a sofa','divan'],['a bookshelf','kitob javoni'],['a mirror','oyna'],['a carpet','gilam'],['a computer','kompyuter']];
+const CP=[['faster','tezroq','a car','a bicycle','mashina','velosiped'],['bigger','kattaroq','an elephant','a cat','fil','mushuk'],['taller','balandroq','a tree','a house','daraxt','uy'],['colder','sovuqroq','winter','summer','qish','yoz'],['heavier',"og'irroq",'a stone','a book','tosh','kitob'],['cheaper','arzonroq','bread','meat','non',"go'sht"],['older','keksaroq','a grandfather','a father','bobo','ota'],['longer','uzunroq','a river','a road','daryo',"yo'l"],['hotter','issiqroq','July','December','iyul','dekabr'],['smaller','kichikroq','a mouse','a dog','sichqon','it']];
+E.speak.push(['🔙 Past Simple',PS.map(([g,u,a])=>`Did you ${g} yesterday?|Kecha ${u}?|Yes, I ${a} yesterday.|${g.split(' ')[0]}=${a.split(' ')[0]}`)],
+['🏠 There is / There are',TI.map(([g,u])=>`Is there ${g} in your room?|Xonangizda ${u} bormi?|Yes, there is ${g} in my room.|${g.slice(2)}=${u}`)],
+['⚖️ Comparatives',CP.map(([c,uc,a,b,ua,ub])=>`Which is ${c}, ${a} or ${b}?|Qaysi biri ${uc}: ${ua} yoki ${ub}?|${a[0].toUpperCase()+a.slice(1)} is ${c} than ${b}.|${c}=${uc}`)]);
+I.speak[0][1].push(...`What was your first job?|Birinchi ishingiz qaysi edi?|I worked as a waiter.|waiter=ofitsiant
+Do you work hard?|Qattiq ishlaysizmi?|Yes, I always meet my deadlines.|deadline=muddat,meet=bajarmoq
+What skills do you have?|Qanday ko'nikmalaringiz bor?|I can use computers and speak English.|skill=ko'nikma
+Would you like to work abroad?|Chet elda ishlashni xohlaysizmi?|Yes, I want new experience.|abroad=chet el,experience=tajriba
+What makes a good boss?|Yaxshi rahbar qanday bo'ladi?|A good boss listens and helps.|boss=rahbar,listen=quloq solmoq`.split('\n'));
+I.speak.push(...RI);
+const RW=(a,b,c)=>[a,b,c];
+E.grammar[0][3]=['verb + ed / V2',"Subject + didn't + verb",'Did + subject + verb?',[['I played football.',"I didn't play football.",'Did I play football?'],['She went home.',"She didn't go home.",'Did she go home?'],['They ate pizza.',"They didn't eat pizza.",'Did they eat pizza?']]];
+E.grammar[1][3]=DATA.beginner.grammar[0][3];
+E.grammar[2][3]=['','There isn\'t / There aren\'t + noun','Is there / Are there + noun?',[['There is a book.',"There isn't a book.",'Is there a book?'],['There are two books.',"There aren't two books.",'Are there two books?'],['There is some milk.',"There isn't any milk.",'Is there any milk?']],'There is + singular / There are + plural'];
+I.grammar[0][3]=['have / has + V3',"Subject + haven't / hasn't + V3",'Have / Has + subject + V3?',[['I have visited Turkey.',"I haven't visited Turkey.",'Have I visited Turkey?'],['She has finished.',"She hasn't finished.",'Has she finished?'],['They have eaten.',"They haven't eaten.",'Have they eaten?']]];
+I.grammar[1][3]=['',"If + Present Simple, won't + verb",'Will + subject + verb + if + Present Simple?',[['If it rains, we will stay home.',"If it rains, we won't go out.",'Will you stay home if it rains?'],['If you study, you will pass.',"If you don't study, you won't pass.",'Will you pass if you study?'],['If she calls, I will answer.',"If she doesn't call, I won't answer.",'Will you answer if she calls?']],'If + Present Simple, will + verb'];
+I.grammar[2][3]=['can / must / should + verb',"Subject + can't / mustn't / shouldn't + verb",'Can / Must / Should + subject + verb?',[['You should sleep more.',"You shouldn't sleep late.",'Should I sleep more?'],['He can swim.',"He can't swim.",'Can he swim?'],['We must go now.',"We mustn't be late.",'Must we go now?']]];
+const PCk='now=hozir,right now=aynan hozir,at the moment=hozirgi paytda,Look!=Qarang!,Listen!=Eshiting!,today=bugun';
+[[DATA.beginner,[PCk,'I / you / he / she / it / we / they=shaxs olmoshlari','a / an=bitta (birlik),the=aniq narsa','always=doim,usually=odatda,often=tez-tez,sometimes=ba\'zan,never=hech qachon,every day=har kuni,on Mondays=dushanba kunlari']],
+[DATA.elementary,['yesterday=kecha,last night=kecha kechqurun,last week=o\'tgan hafta,last year=o\'tgan yil,ago=oldin,in 2020=2020-yilda,then=keyin',PCk,'some=bir oz,any=biror,a lot of=ko\'p,how many=nechta,in the room=xonada']],
+[DATA.intermediate,['ever=hech,never=hech qachon,already=allaqachon,yet=hali,just=hozirgina,since=...dan beri,for=davomida,so far=hozirgacha,recently=yaqinda','if=agar,unless=agar...masa,when=qachonki,as soon as=...ishi bilanoq,probably=ehtimol','should=kerak,must=shart,can=qila olmoq,might=mumkin,have to=majbur,ought to=lozim']]
+].forEach(([L,K])=>L.grammar.forEach((g,i)=>g[4]=K[i]));
+let lvl=null,tab=null,sample=null,room=null;
+const h=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+function say(t){try{const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+function home(){lvl=null;A.innerHTML='';const d=h('div','hero');d.append(h('h1','','Ingliz tilini o\'rganing — oson va qiziqarli'),h('p','mu','Daraja tanlang: Writing, Vocabulary, Grammar, Speaking va AI ustoz.'));A.append(d);const g=h('div','grid');for(const k in LV){const c=h('div','card lv');c.append(h('b','',LV[k]),h('div','mu','Writing • Vocab • Grammar • Speaking'));c.onclick=()=>{lvl=k;tab='vocab';lvPage()};g.append(c)}A.append(g)}
+function lvPage(){A.innerHTML='';A.append(h('h2','',LV[lvl]));const r=h('div','row');[['vocab','📚 Vocabulary'],['writing','✍️ Writing'],['grammar','🧩 Grammar'],['speak','🎤 Speaking']].forEach(([k,n])=>{const b=h('button',k==tab?'on':'g',n);b.onclick=()=>{tab=k;lvPage()};r.append(b)});A.append(r);const c=h('div');A.append(c);({vocab,writing,grammar,speak:speaking})[tab](c,DATA[lvl])}
+function vocab(c,d){d.vocab.forEach(([t,w])=>{const k=h('div','card');k.append(h('h3','',t));const tb=h('div','t'),T=h('table');T.innerHTML='<tr><th>English</th><th>O\'zbekcha</th><th></th></tr>';w.split(';').forEach(p=>{const[e,u]=p.split('='),tr=h('tr');tr.append(h('td','',e),h('td','',u));const td=h('td'),b=h('button','g','🔊');b.onclick=()=>say(e);td.append(b);tr.append(td);T.append(tr)});tb.append(T);k.append(tb);c.append(k)})}
+function writing(c,d){d.writing.forEach(p=>{const k=h('div','card');k.append(h('p','',p));const ta=h('textarea');ta.rows=5;ta.placeholder='Shu yerga yozing...';const b=h('button','','🤖 AI tekshirsin'),o=h('div','ai');b.onclick=()=>ask(`Level ${lvl} student wrote this for the task "${p}":\n${ta.value}\nGive short feedback in Uzbek: fix mistakes, show the corrected version in English.`,o);k.append(ta,h('div','row'),b,o);c.append(k)})}
+function grammar(c,d){d.grammar.forEach(([t,ex,qs,f,kw])=>{const k=h('div','card');k.append(h('h3','',t),h('p','',ex));if(kw){const q=h('div','fm');q.append(h('b','','🔑'));kw.split(',').forEach(z=>q.append(h('span','tag',z.replace('=',' — '))));k.append(q)}if(f){[['+','#16a34a',(f[4]||'Subject + '+f[0])],['−','#dc2626',f[1]],['?','#2563eb',f[2]]].forEach(([m,col,x])=>{const r=h('div','fm',x),b=h('b','',m);b.style.background=col;r.prepend(b);k.append(r)});const tb=h('div','t'),T=h('table','gt');T.innerHTML='<tr><th style="background:#16a34a">Affirmative</th><th style="background:#dc2626">Negative</th><th style="background:#2563eb">Question</th></tr>';f[3].forEach(rw=>{const tr=h('tr');rw.forEach(x=>tr.append(h('td','',x)));T.append(tr)});tb.append(T);k.append(tb)}qs.forEach(([q,o,ci])=>{const b=h('div');b.append(h('b','',q));o.forEach((x,i)=>{const bt=h('button','opt',x);bt.onclick=()=>{b.querySelectorAll('.opt').forEach(z=>z.disabled=1);bt.classList.add(i==ci?'ok':'no');if(i!=ci)b.querySelectorAll('.opt')[ci].classList.add('ok')};b.append(bt)});k.append(b)});c.append(k)});
+const k=h('div','card');k.append(h('h3','','🤖 AI ustoz — grammatika bo\'yicha so\'rang'),h('p','mu','Tushunmagan mavzuingizni yozing, AI o\'zbek tilida tushuntiradi.'));const i=h('input');i.placeholder='Masalan: a va an farqi nima?';const o=h('div','ai'),b=h('button','','Yuborish');b.onclick=()=>ask(`You are a friendly English teacher for ${lvl} level Uzbek students. Answer in Uzbek with simple English examples, short. Question: ${i.value}`,o);k.append(i,h('div','row'),b,o);c.append(k)}
+async function ask(p,o){o.textContent='⏳ ...';try{sample=sample||await claude.use('sample');if(!sample){o.textContent='AI hozircha mavjud emas.';return}const r=await sample(p,{cache:false,onText:x=>o.textContent=x.text});o.textContent=r.text}catch(e){o.textContent='Xatolik: '+(e.message||e.code)}}
+function speaking(c,d){const g=h('div','grid');d.speak.forEach(([t,qs])=>{const k=h('div','card lv');k.append(h('b','',t),h('div','mu',qs.length+' ta savol'));k.onclick=()=>{c.innerHTML='';const bb=h('button','g','← Orqaga');bb.onclick=lvPage;c.append(bb,h('h3','',t));qs.forEach((s,n)=>{const[q,u,a,w]=s.split('|'),x=h('div','card');x.append(h('b','',(n+1)+'. '+q),h('div','mu',u));const r=h('div','row'),b1=h('button','g','🔊 Savol'),b2=h('button','g','👁 Javob');b1.onclick=()=>say(q);const an=h('div','ans');an.append(h('div','',a));b2.onclick=()=>{an.style.display=an.style.display=='block'?'none':'block';say(a)};w.split(',').forEach(z=>an.append(h('span','tag',z.replace('=',' — '))));r.append(b1,b2);x.append(r,an);c.append(x)})};g.append(k)});c.append(g)}
+/* ---- Premium / Promokod: ikki kishi bir xil kodni kiritsa ulanadi ---- */
+const me=Math.random().toString(36).slice(2,8);let pc,stream,mycode,R,bd,xo,myN='Mehmon';
+$('#prem').onclick=()=>{A.innerHTML='';const k=h('div','card');k.append(h('h2','','⭐ Premium'));const i=h('input');i.placeholder='Premium';const b=h('button','','OK'),s=h('p','mu');b.onclick=()=>join(i.value.trim().toLowerCase(),'Mehmon-'+me.slice(0,2),s);k.append(i,h('div','row'),b,s);A.append(k)};
+async function join(code,name,s){if(!code){s.textContent='Kod kiriting';return}myN=name;s.textContent='⏳';try{const rm=await claude.use('room');if(!rm){s.textContent='Real-time ulanish mavjud emas (tizimga kiring).';return}R=await rm.join('p-'+code);R.presence({me,name});R.onPeers(ch=>{if(ch.peers.length>=2&&$('#sec').style.display!='block')openSec(code)})}catch(e){s.textContent='Xatolik: '+(e.message||e.code)}}
+function openSec(code){$('#sec').style.display='block';const B=$('#secbody');B.innerHTML='';const top=h('div','card'),st=h('div','mu','Ulandi ✅ — kod: '+code),mic=h('button','','🎙 Mikrofonni yoqish');top.append(st,h('div','row'),mic);const au=h('audio');au.autoplay=true;top.append(au);
+const gm=h('div','card');gm.append(h('h3','','🎮 O\'yin: XO (tic-tac-toe)'));const gb=h('div'),gs=h('div','mu'),rs=h('button','g','Qayta boshlash');gm.append(gs,gb,h('div','row'),rs);
+const ch=h('div','card');ch.append(h('h3','','💬 Chat'));const lg=h('div'),inp=h('input');lg.id='log';inp.placeholder='Xabar yozing...';const sb=h('button','','Yuborish'),fb=h('button','g','➕ Do\'st bo\'lish');ch.append(lg,inp,h('div','row'),sb,' ',fb);B.append(top,gm,ch);
+const add=(t,e)=>{const d=h('div','',t);if(e)d.append(e);lg.append(d);lg.scrollTop=1e9};
+sb.onclick=()=>{if(!inp.value)return;R.emit('chat',{n:myN,t:inp.value});add(myN+': '+inp.value);inp.value=''};inp.onkeydown=e=>{if(e.key=='Enter')sb.click()};
+R.on('chat',m=>{if(!m.isMe)add(m.data.n+': '+m.data.t)});
+fb.onclick=()=>{R.emit('fr',{n:myN,k:'req'});add('Do\'stlik so\'rovi yuborildi')};
+R.on('fr',m=>{if(m.isMe)return;if(m.data.k=='req'){const b=h('button','g','Qabul qilish');b.onclick=()=>{R.emit('fr',{n:myN,k:'ok'});sv(m.data.n);b.remove()};add('👋 '+m.data.n+' do\'st bo\'lmoqchi ',b)}else{sv(m.data.n)}});
+function sv(n){try{const f=JSON.parse(localStorage.getItem('fr')||'[]');if(!f.includes(n))f.push(n);localStorage.setItem('fr',JSON.stringify(f))}catch(e){}add('🤝 '+n+' endi do\'stingiz')}
+/* XO */
+let bd9=Array(9).fill(''),turn='X',done=0;const iAm=()=>{const ps=R.peers().map(p=>p.presence.me).sort();return ps[0]==me?'X':'O'};
+function draw(){gb.innerHTML='';const w=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].find(l=>bd9[l[0]]&&bd9[l[0]]==bd9[l[1]]&&bd9[l[1]]==bd9[l[2]]);done=w||!bd9.includes('');for(let r=0;r<3;r++){const row=h('div');for(let c=0;c<3;c++){const i=r*3+c,b=h('button','cell',bd9[i]);b.onclick=()=>{if(!bd9[i]&&!done&&turn==iAm()){bd9[i]=turn;turn=turn=='X'?'O':'X';R.emit('xo',{b:bd9,t:turn});draw()}};row.append(b)}gb.append(row)}gs.textContent=w?'🏆 G\'olib: '+bd9[w[0]]:done?'Durang':'Navbat: '+turn+(turn==iAm()?' (siz)':'')+' • Siz: '+iAm()}
+R.on('xo',m=>{if(!m.isMe){bd9=m.data.b;turn=m.data.t;draw()}});rs.onclick=()=>{bd9=Array(9).fill('');turn='X';R.emit('xo',{b:bd9,t:turn});draw()};draw();
+/* Ovoz: WebRTC, signal room orqali */
+const cfg={iceServers:[{urls:'stun:stun.l.google.com:19302'}]};
+function mk(){pc=new RTCPeerConnection(cfg);pc.ontrack=e=>{au.srcObject=e.streams[0]};pc.onicecandidate=e=>{if(e.candidate)R.emit('sig',{c:e.candidate,f:me})};stream.getTracks().forEach(t=>pc.addTrack(t,stream))}
+R.on('sig',async m=>{const d=m.data;if(m.isMe||d.f==me)return;try{if(d.hi){if(stream&&me<d.f){mk();const o=await pc.createOffer();await pc.setLocalDescription(o);R.emit('sig',{o,f:me})}}else if(d.o){if(!stream)return;mk();await pc.setRemoteDescription(d.o);const a=await pc.createAnswer();await pc.setLocalDescription(a);R.emit('sig',{a,f:me})}else if(d.a){await pc.setRemoteDescription(d.a)}else if(d.c&&pc){await pc.addIceCandidate(d.c)}}catch(e){}});
+mic.onclick=async()=>{try{stream=await navigator.mediaDevices.getUserMedia({audio:true});mic.textContent='🎙 Mikrofon yoqilgan';mic.disabled=true;R.emit('sig',{hi:1,f:me})}catch(e){st.textContent='Mikrofon ruxsat berilmadi yoki qurilmada yo\'q'}};
+R.on('sig',m=>{if(!m.isMe&&m.data.hi&&stream&&me>m.data.f)R.emit('sig',{hi:1,f:me})})}
+$('#leave').onclick=()=>{$('#sec').style.display='none';try{R&&R.leave();pc&&pc.close();stream&&stream.getTracks().forEach(t=>t.stop())}catch(e){}stream=pc=null;home()};
+$('#home').onclick=home;home();
+</script></body></html>
