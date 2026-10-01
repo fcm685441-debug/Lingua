@@ -26,7 +26,7 @@ input,textarea{width:100%;font:inherit;padding:10px 12px;border-radius:12px;bord
 #sec{position:fixed;inset:0;background:var(--bg);z-index:9;overflow:auto;padding:max(16px,env(safe-area-inset-top,0px)) 16px max(16px,env(safe-area-inset-bottom,0px));display:none}
 .cell{width:84px;height:84px;font-size:38px;background:var(--card);color:var(--tx);border:1px solid #7c5cff55}
 #log{height:200px;overflow:auto}
-.ai{white-space:pre-wrap}.fm{display:flex;gap:10px;align-items:center;margin:6px 0;padding:8px;border-radius:12px;background:#7c5cff14;font-weight:600}.fm b{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;color:#fff;flex:none}.gt th{color:#fff;text-align:center}
+.ai{white-space:pre-wrap}.vg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:10px 0}.vt{position:relative;aspect-ratio:1;overflow:hidden;cursor:pointer;border-radius:6px;background:#000}.vt video{width:100%;height:100%;object-fit:cover;pointer-events:none}.vt span{position:absolute;bottom:4px;left:6px;color:#fff;font-size:13px}.av{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#7c5cff,#22d3ee);display:grid;place-items:center;font-size:30px;font-weight:700;color:#fff;flex:none}.stat{text-align:center;padding:0 8px}.bd3{display:grid;grid-template-columns:repeat(3,84px);gap:6px;margin:10px 0}.cell{padding:0}.b8{display:grid;grid-template-columns:repeat(8,1fr);width:min(100%,380px);margin:10px 0;border-radius:8px;overflow:hidden}.sq{aspect-ratio:1;display:grid;place-items:center;font-size:clamp(18px,6vw,30px);cursor:pointer;user-select:none;color:#000}.fm{display:flex;gap:10px;align-items:center;margin:6px 0;padding:8px;border-radius:12px;background:#7c5cff14;font-weight:600}.fm b{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;color:#fff;flex:none}.gt th{color:#fff;text-align:center}
 </style><script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js"></script></head><body><div class="w">
 <header><div class="logo">🌍 Lingua</div><div><button class="g" id="home">Bosh sahifa</button> <button id="prem">⭐ Premium</button></div></header>
 <main id="app"></main></div>
@@ -204,38 +204,101 @@ const k=h('div','card');k.append(h('h3','','🤖 AI ustoz — grammatika bo\'yic
 async function ask(p,o){if(typeof claude=='undefined'){o.textContent='AI ustoz bu saytda hozircha ishlamaydi.';return}o.textContent='⏳ ...';try{sample=sample||await claude.use('sample');if(!sample){o.textContent='AI hozircha mavjud emas.';return}const r=await sample(p,{cache:false,onText:x=>o.textContent=x.text});o.textContent=r.text}catch(e){o.textContent='Xatolik: '+(e.message||e.code)}}
 function speaking(c,d){const g=h('div','grid');d.speak.forEach(([t,qs])=>{const k=h('div','card lv');k.append(h('b','',t),h('div','mu',qs.length+' ta savol'));k.onclick=()=>{c.innerHTML='';const bb=h('button','g','← Orqaga');bb.onclick=lvPage;c.append(bb,h('h3','',t));qs.forEach((s,n)=>{const[q,u,a,w]=s.split('|'),x=h('div','card');x.append(h('b','',(n+1)+'. '+q),h('div','mu',u));const r=h('div','row'),b1=h('button','g','🔊 Savol'),b2=h('button','g','👁 Javob');b1.onclick=()=>say(q);const an=h('div','ans');an.append(h('div','',a));b2.onclick=()=>{an.style.display=an.style.display=='block'?'none':'block';say(a)};w.split(',').forEach(z=>an.append(h('span','tag',z.replace('=',' — '))));r.append(b1,b2);x.append(r,an);c.append(x)})};g.append(k)});c.append(g)}
 /* ---- Premium / Promokod: ikki kishi bir xil kodni kiritsa ulanadi ---- */
-const me=Math.random().toString(36).slice(2,8);let pc,stream,mycode,R,bd,xo,myN='Mehmon';
-$('#prem').onclick=()=>{A.innerHTML='';const k=h('div','card');k.append(h('h2','','⭐ Premium'));const i=h('input');i.placeholder='Premium';const b=h('button','','OK'),s=h('p','mu');b.onclick=()=>join(i.value.trim().toLowerCase(),'Mehmon-'+me.slice(0,2),s);k.append(i,h('div','row'),b,s);A.append(k)};
-let pr;
-function setup(c,code){const H={};let other=null;
-R={emit:(t,d)=>{try{c.send({t,d})}catch(e){}},on:(t,f)=>{(H[t]=H[t]||[]).push(f)},peers:()=>[{presence:{me}},{presence:{me:other}}],leave:()=>{try{c.close();pr.destroy()}catch(e){}}};
-c.on('open',()=>c.send({t:'hello',d:me}));
-c.on('data',m=>{if(m.t=='hello'){other=m.d;openSec(code)}else(H[m.t]||[]).forEach(f=>f({isMe:false,data:m.d}))});
-c.on('close',()=>{$('#leave').click()})}
+const me=Math.random().toString(36).slice(2,8);let uid;try{uid=localStorage.getItem('uid');if(!uid){uid=Math.random().toString(36).slice(2,10);localStorage.setItem('uid',uid)}}catch(e){uid=me}
+const NM=()=>{try{const n=localStorage.getItem('nm');if(n)return n}catch(e){}return 'Mehmon-'+uid.slice(0,3)};
+const LG=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||'[]');localStorage.setItem(k,JSON.stringify(v))}catch(e){return[]}};let pc,stream,mycode,R,bd,xo,myN='Mehmon';
+$('#prem').onclick=()=>{A.innerHTML='';const k=h('div','card');k.append(h('h2','','⭐ Premium'));const i=h('input');i.placeholder='Premium';const b=h('button','','OK'),s=h('p','mu');b.onclick=()=>join(i.value.trim().toLowerCase(),NM(),s);k.append(i,h('div','row'),b,s);A.append(k)};
+let pr,opened=0;
+function setupR(code,isHost,c,s){const H={},cn={},self={me,uid,n:myN,fl:LG('fr2').map(f=>f.id)},mem={};
+const fire=(t,d,from)=>(H[t]||[]).forEach(f=>f({isMe:false,data:d,from}));
+const upd=l=>{R.list=l;fire('peers',l);if(l.length>=2&&!opened){opened=1;openSec(code)}};
+R={list:[self],emit:(t,d)=>{if(isHost)Object.values(cn).forEach(x=>{try{x.send({t,d,from:me})}catch(e){}});else try{c.send({t,d})}catch(e){}},on:(t,f)=>{(H[t]=H[t]||[]).push(f)},peers:()=>R.list.map(p=>({presence:{me:p.me}})),leave:()=>{try{pr.destroy()}catch(e){}}};
+if(isHost){mem[me]=self;const push=()=>{const l=Object.values(mem);Object.values(cn).forEach(x=>{try{x.send({t:'peers',d:l})}catch(e){}});upd(l)};
+pr.on('connection',x=>{x.on('data',m=>{if(m.t=='hello'){if(Object.keys(mem).length>=10){x.send({t:'full'});setTimeout(()=>x.close(),400);return}x.sid=m.d.me;mem[x.sid]=m.d;cn[x.sid]=x;push()}else if(x.sid){Object.values(cn).forEach(y=>{if(y!=x)try{y.send({t:m.t,d:m.d,from:x.sid})}catch(e){}});fire(m.t,m.d,x.sid)}});x.on('close',()=>{if(x.sid){delete mem[x.sid];delete cn[x.sid];push()}})})}
+else{c.on('open',()=>c.send({t:'hello',d:self}));c.on('data',m=>{if(m.t=='peers')upd(m.d);else if(m.t=='full')s.textContent="Xona to'lgan (10/10)";else fire(m.t,m.d,m.from)});c.on('close',()=>{if(opened)$('#leave').click()})}}
 function join(code,name,s){if(!code){s.textContent='Yozing';return}myN=name;if(typeof Peer=='undefined'){s.textContent='Ulanish kutubxonasi yuklanmadi. Internetni tekshiring.';return}s.textContent='⏳';
 const id='lingua-'+[...code].map(ch=>ch.charCodeAt(0).toString(16)).join('');
 pr=new Peer(id);
-pr.on('open',()=>pr.on('connection',c=>setup(c,code)));
-pr.on('error',e=>{if(e.type=='unavailable-id'){pr=new Peer();pr.on('open',()=>setup(pr.connect(id),code));pr.on('error',x=>s.textContent='Xatolik: '+x.type)}else s.textContent='Xatolik: '+e.type})}
-function openSec(code){$('#sec').style.display='block';const B=$('#secbody');B.innerHTML='';const top=h('div','card'),st=h('div','mu','Ulandi ✅ — kod: '+code),mic=h('button','','🎙 Mikrofonni yoqish');top.append(st,h('div','row'),mic);const au=h('audio');au.autoplay=true;top.append(au);
-const gm=h('div','card');gm.append(h('h3','','🎮 O\'yin: XO (tic-tac-toe)'));const gb=h('div'),gs=h('div','mu'),rs=h('button','g','Qayta boshlash');gm.append(gs,gb,h('div','row'),rs);
-const ch=h('div','card');ch.append(h('h3','','💬 Chat'));const lg=h('div'),inp=h('input');lg.id='log';inp.placeholder='Xabar yozing...';const sb=h('button','','Yuborish'),fb=h('button','g','➕ Do\'st bo\'lish');ch.append(lg,inp,h('div','row'),sb,' ',fb);B.append(top,gm,ch);
-const add=(t,e)=>{const d=h('div','',t);if(e)d.append(e);lg.append(d);lg.scrollTop=1e9};
-sb.onclick=()=>{if(!inp.value)return;R.emit('chat',{n:myN,t:inp.value});add(myN+': '+inp.value);inp.value=''};inp.onkeydown=e=>{if(e.key=='Enter')sb.click()};
-R.on('chat',m=>{if(!m.isMe)add(m.data.n+': '+m.data.t)});
-fb.onclick=()=>{R.emit('fr',{n:myN,k:'req'});add('Do\'stlik so\'rovi yuborildi')};
-R.on('fr',m=>{if(m.isMe)return;if(m.data.k=='req'){const b=h('button','g','Qabul qilish');b.onclick=()=>{R.emit('fr',{n:myN,k:'ok'});sv(m.data.n);b.remove()};add('👋 '+m.data.n+' do\'st bo\'lmoqchi ',b)}else{sv(m.data.n)}});
-function sv(n){try{const f=JSON.parse(localStorage.getItem('fr')||'[]');if(!f.includes(n))f.push(n);localStorage.setItem('fr',JSON.stringify(f))}catch(e){}add('🤝 '+n+' endi do\'stingiz')}
-/* XO */
-let bd9=Array(9).fill(''),turn='X',done=0;const iAm=()=>{const ps=R.peers().map(p=>p.presence.me).sort();return ps[0]==me?'X':'O'};
-function draw(){gb.innerHTML='';const w=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].find(l=>bd9[l[0]]&&bd9[l[0]]==bd9[l[1]]&&bd9[l[1]]==bd9[l[2]]);done=w||!bd9.includes('');for(let r=0;r<3;r++){const row=h('div');for(let c=0;c<3;c++){const i=r*3+c,b=h('button','cell',bd9[i]);b.onclick=()=>{if(!bd9[i]&&!done&&turn==iAm()){bd9[i]=turn;turn=turn=='X'?'O':'X';R.emit('xo',{b:bd9,t:turn});draw()}};row.append(b)}gb.append(row)}gs.textContent=w?'🏆 G\'olib: '+bd9[w[0]]:done?'Durang':'Navbat: '+turn+(turn==iAm()?' (siz)':'')+' • Siz: '+iAm()}
-R.on('xo',m=>{if(!m.isMe){bd9=m.data.b;turn=m.data.t;draw()}});rs.onclick=()=>{bd9=Array(9).fill('');turn='X';R.emit('xo',{b:bd9,t:turn});draw()};draw();
-/* Ovoz: WebRTC, signal room orqali */
-const cfg={iceServers:[{urls:'stun:stun.l.google.com:19302'}]};
-function mk(){pc=new RTCPeerConnection(cfg);pc.ontrack=e=>{au.srcObject=e.streams[0]};pc.onicecandidate=e=>{if(e.candidate)R.emit('sig',{c:e.candidate,f:me})};stream.getTracks().forEach(t=>pc.addTrack(t,stream))}
-R.on('sig',async m=>{const d=m.data;if(m.isMe||d.f==me)return;try{if(d.hi){if(stream&&me<d.f){mk();const o=await pc.createOffer();await pc.setLocalDescription(o);R.emit('sig',{o,f:me})}}else if(d.o){if(!stream)return;mk();await pc.setRemoteDescription(d.o);const a=await pc.createAnswer();await pc.setLocalDescription(a);R.emit('sig',{a,f:me})}else if(d.a){await pc.setRemoteDescription(d.a)}else if(d.c&&pc){await pc.addIceCandidate(d.c)}}catch(e){}});
-mic.onclick=async()=>{try{stream=await navigator.mediaDevices.getUserMedia({audio:true});mic.textContent='🎙 Mikrofon yoqilgan';mic.disabled=true;R.emit('sig',{hi:1,f:me})}catch(e){st.textContent='Mikrofon ruxsat berilmadi yoki qurilmada yo\'q'}};
-R.on('sig',m=>{if(!m.isMe&&m.data.hi&&stream&&me>m.data.f)R.emit('sig',{hi:1,f:me})})}
-$('#leave').onclick=()=>{$('#sec').style.display='none';try{R&&R.leave();pc&&pc.close();stream&&stream.getTracks().forEach(t=>t.stop())}catch(e){}stream=pc=null;home()};
+pr.on('open',()=>setupR(code,true,null,s));
+pr.on('error',e=>{if(e.type=='unavailable-id'){pr=new Peer();pr.on('open',()=>setupR(code,false,pr.connect(id),s));pr.on('error',x=>s.textContent='Xatolik: '+x.type)}else s.textContent='Xatolik: '+e.type})}
+const DB=new Promise(r=>{try{const q=indexedDB.open('lg',1);q.onupgradeneeded=()=>q.result.createObjectStore('v',{keyPath:'id'});q.onsuccess=()=>r(q.result);q.onerror=()=>r(null)}catch(e){r(null)}});
+const tx=async(m,f)=>{const d=await DB;if(!d)return null;return new Promise(r=>{try{const t=d.transaction('v',m),q=f(t.objectStore('v'));t.oncomplete=()=>r(q&&q.result);t.onerror=()=>r(null)}catch(e){r(null)}})};
+const vAll=()=>tx('readonly',s=>s.getAll()),vPut=o=>tx('readwrite',s=>s.put(o)),vDel=id=>tx('readwrite',s=>s.delete(id));
+function openSec(code){$('#sec').style.display='block';const B=$('#secbody');B.innerHTML='';
+const iAm=()=>{const i=R.peers().map(p=>p.presence.me).sort().indexOf(me);return i==0?'X':i==1?'O':'S'};
+let PR;const tabs=h('div','row'),P=[h('div'),h('div'),h('div')];
+["🎮 O'yinlar",'👤 Profil','💬 Chat'].forEach((n,i)=>{const b=h('button',i?'g':'on',n);b.onclick=()=>{if(i==1&&PR)PR();P.forEach((p,j)=>p.style.display=i==j?'block':'none');[...tabs.children].forEach((x,j)=>x.className=j==i?'on':'g')};tabs.append(b)});P[1].style.display=P[2].style.display='none';
+const top=h('div','card'),st=h('div','mu','Ulandi ✅'),mic=h('button','',"🎙 Mikrofonni yoqish"),sp=h('button','g','🔊 Eshitish: yoqiq'),au=h('div'),rw=h('div','row');rw.append(mic,sp);top.append(st,rw,au);
+
+B.append(tabs,top,P[0],P[1],P[2]);
+/* O'yinlar */
+const gb=[h('div','card'),h('div','card'),h('div','card')],sel=h('div','row');
+['❌⭕ XO','♟ Shaxmat','⚪ Shashka'].forEach((n,i)=>{const b=h('button',i?'g':'on',n);b.onclick=()=>{gb.forEach((x,j)=>x.style.display=i==j?'block':'none');[...sel.children].forEach((x,j)=>x.className=j==i?'on':'g')};sel.append(b)});gb[1].style.display=gb[2].style.display='none';P[0].append(sel,...gb);
+(function(box){let bd=Array(9).fill(''),turn='X',done=0;const gs=h('div','mu'),g=h('div','bd3'),rs=h('button','g','Qayta boshlash');box.append(gs,g,h('div','row'),rs);
+function draw(){g.innerHTML='';const w=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].find(l=>bd[l[0]]&&bd[l[0]]==bd[l[1]]&&bd[l[1]]==bd[l[2]]);done=w||!bd.includes('');bd.forEach((v,i)=>{const b=h('button','cell',v);b.onclick=()=>{if(!v&&!done&&turn==iAm()){bd[i]=turn;turn=turn=='X'?'O':'X';R.emit('xo',{b:bd,t:turn});draw()}};g.append(b)});gs.textContent=w?"🏆 G'olib: "+bd[w[0][0]]:done?'Durang':'Navbat: '+turn+(turn==iAm()?' (siz)':'')+' • Siz: '+iAm()}
+R.on('xo',m=>{bd=m.data.b;turn=m.data.t;draw()});rs.onclick=()=>{bd=Array(9).fill('');turn='X';R.emit('xo',{b:bd,t:turn});draw()};draw()})(gb[0]);
+const U={wK:'♔',wQ:'♕',wR:'♖',wB:'♗',wN:'♘',wP:'♙',bK:'♚',bQ:'♛',bR:'♜',bB:'♝',bN:'♞',bP:'♟',w:'⚪',b:'⚫',W:'🤍',B:'🖤'};
+const initCh=()=>{const b=Array(64).fill('');'RNBQKBNR'.split('').forEach((p,i)=>{b[i]='b'+p;b[56+i]='w'+p});for(let i=0;i<8;i++){b[8+i]='bP';b[48+i]='wP'}return b};
+const initDm=()=>{const b=Array(64).fill('');for(let i=0;i<64;i++){const r=i>>3;if((r+(i&7))%2){if(r<3)b[i]='b';if(r>4)b[i]='w'}}return b};
+function cmv(b,f,t){const p=b[f],c=p[0],k=p[1],fr=f>>3,fc=f&7,tr=t>>3,tc=t&7,dr=tr-fr,dc=tc-fc,q=b[t];if(q&&q[0]==c)return 0;
+const clr=()=>{const a=Math.sign(dr),e=Math.sign(dc);let r=fr+a,x=fc+e;while(r!=tr||x!=tc){if(b[r*8+x])return 0;r+=a;x+=e}return 1},ad=Math.abs(dr),ac=Math.abs(dc);let ok;
+if(k=='N')ok=ad*ac==2;else if(k=='K')ok=Math.max(ad,ac)==1;else if(k=='R')ok=(!dr||!dc)&&clr();else if(k=='B')ok=ad==ac&&clr();else if(k=='Q')ok=(!dr||!dc||ad==ac)&&clr();
+else{const d=c=='w'?-1:1;ok=!dc&&!q?dr==d||(dr==2*d&&fr==(c=='w'?6:1)&&!b[f+8*d]):ac==1&&dr==d&&q}
+if(!ok)return 0;b[t]=k=='P'&&(tr==0||tr==7)?c+'Q':p;b[f]='';return 1}
+function dmv(b,f,t,tn){const p=b[f],fr=f>>3,fc=f&7,tr=t>>3,tc=t&7,dr=tr-fr,dc=tc-fc,d=tn=='w'?-1:1;if(b[t]||(tr+tc)%2==0)return 0;if(p==p.toLowerCase()&&Math.sign(dr)!=d)return 0;
+if(Math.abs(dr)==2&&Math.abs(dc)==2){const m=((fr+tr)/2)*8+(fc+tc)/2;if(!b[m]||b[m].toLowerCase()==tn)return 0;b[m]=''}else if(Math.abs(dr)!=1||Math.abs(dc)!=1)return 0;
+b[t]=tr==(tn=='w'?0:7)?p.toUpperCase():p;b[f]='';return 1}
+function bg(box,kind){let b=kind=='ch'?initCh():initDm(),turn='w',sl=null;const gs=h('div','mu'),g=h('div','b8'),rs=h('button','g','Qayta boshlash'),mine=()=>iAm()=='X'?'w':iAm()=='O'?'b':'-',own=p=>p&&(kind=='ch'?p[0]:p.toLowerCase())==turn;box.append(gs,g,h('div','row'),rs);
+function draw(){g.innerHTML='';const lose=kind=='ch'?(!b.includes('wK')?'b':!b.includes('bK')?'w':''):(!b.some(x=>x.toLowerCase()=='w')?'b':!b.some(x=>x.toLowerCase()=='b')?'w':'');
+b.forEach((p,i)=>{const d=h('div','sq',U[p]||'');d.style.background=((i>>3)+(i&7))%2?'#7a5c3e':'#e5d9c3';if(i==sl)d.style.outline='3px solid #22d3ee';d.onclick=()=>{if(lose||turn!=mine())return;if(sl==null){if(own(p))sl=i}else if(i==sl)sl=null;else if(own(p))sl=i;else if(kind=='ch'?cmv(b,sl,i):dmv(b,sl,i,turn)){sl=null;turn=turn=='w'?'b':'w';R.emit(kind,{b,t:turn})}draw()};g.append(d)});
+gs.textContent=lose?'🏆 G\'olib: '+(lose=='w'?'oq':'qora'):'Navbat: '+(turn=='w'?'oq':'qora')+(turn==mine()?' (siz)':'')+' • Siz: '+(mine()=='w'?'oq':'qora')}
+R.on(kind,m=>{b=m.data.b;turn=m.data.t;draw()});rs.onclick=()=>{b=kind=='ch'?initCh():initDm();turn='w';sl=null;R.emit(kind,{b,t:turn});draw()};draw()}
+bg(gb[1],'ch');bg(gb[2],'dm');
+/* Chat va do'stlar (suhbat shu brauzerda saqlanadi) */
+const LS=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||'[]');localStorage.setItem(k,JSON.stringify(v))}catch(e){return[]}};
+const fc=h('div','card'),mb=h('div'),fl=h('div'),rq=h('div'),ch=h('div','card'),lg=h('div'),inp=h('input'),sb=h('button','','Yuborish'),fib=h('button','g','📎 Fayl'),fi=h('input');fi.type='file';fi.style.display='none';lg.id='log';inp.placeholder='Xabar yozing...';
+fc.append(h('h3','','👥 Xonada'),mb,h('h3','',"🤝 Do'stlarim"),fl,rq);ch.append(h('h3','','💬 Chat'),lg,inp,h('div','row'),sb,' ',fib,fi);P[2].append(fc,ch);
+const FR=()=>LS('fr2'),isF=u=>FR().some(f=>f.id==u),addF=(u,n)=>{const F=FR();if(!F.some(f=>f.id==u)){F.push({id:u,n});LS('fr2',F)}};
+const add=(t,e,sv)=>{const d=h('div','',t);if(e)d.append(e);lg.append(d);lg.scrollTop=1e9;if(sv){const a=LS('lc-'+code);a.push(t);LS('lc-'+code,a.slice(-200))}};
+LS('lc-'+code).forEach(t=>add(t,null,0));
+const rend=()=>{const L=R.list;L.forEach(p=>{if(p.me!=me&&(p.fl||[]).includes(uid)&&LS('frs').includes(p.uid)&&!isF(p.uid)){LS('frs',LS('frs').filter(x=>x!=p.uid));addF(p.uid,p.n)}});
+st.textContent='Xonada: '+L.map(p=>p.n).join(', ')+' ('+L.length+'/10)';mb.innerHTML='';
+L.forEach(p=>{const d=h('div','row');d.append(h('span','',(p.me==me?'🟢 ':'⚪ ')+p.n+(p.me==me?' (siz)':'')));if(p.me!=me){if(isF(p.uid))d.append(h('span','tag',"🤝 do'st"));else if(LS('frs').includes(p.uid))d.append(h('span','tag',"⏳ so'rov yuborilgan"));else{const b=h('button','g',"➕ Do'st");b.onclick=()=>{LS('frs',[...LS('frs'),p.uid]);R.emit('fr',{k:'req',to:p.me,uid,n:myN});rend()};d.append(b)}}mb.append(d)});
+fl.innerHTML='';const F=FR();if(!F.length)fl.append(h('span','mu',"Hozircha do'st yo'q"));F.forEach(f=>fl.append(h('span','tag',(L.some(p=>p.uid==f.id)?'🟢 ':'⚪ ')+f.n)));
+rq.innerHTML='';LS('frp').forEach(q=>{const d=h('div','row'),b=h('button','','Qabul qilish');d.append(h('span','',"👋 "+q.n+" do'st bo'lmoqchi"),b);b.onclick=()=>{LS('frp',LS('frp').filter(x=>x.uid!=q.uid));addF(q.uid,q.n);const p=R.list.find(x=>x.uid==q.uid);if(p)R.emit('fr',{k:'ok',to:p.me,uid,n:myN});rend()};rq.append(d)})};
+R.on('fr',m=>{const d=m.data;if(d.to!=me)return;if(d.k=='req'){if(isF(d.uid)){R.emit('fr',{k:'ok',to:m.from,uid,n:myN})}else{const q=LS('frp');if(!q.some(x=>x.uid==d.uid)){q.push({uid:d.uid,n:d.n});LS('frp',q)}add("👋 "+d.n+" do'st bo'lmoqchi")}}else{addF(d.uid,d.n);LS('frs',LS('frs').filter(x=>x!=d.uid));add('🤝 '+d.n+" endi do'stingiz",null,1)}rend()});
+R.on('peers',rend);rend();
+sb.onclick=()=>{if(!inp.value)return;R.emit('chat',{n:myN,t:inp.value});add(myN+': '+inp.value,null,1);inp.value=''};inp.onkeydown=e=>{if(e.key=='Enter')sb.click()};
+R.on('chat',m=>add(m.data.n+': '+m.data.t,null,1));
+const showFile=(n,nm,ty,bl)=>{const u=URL.createObjectURL(bl),d=h('div','',n+': 📎 '+nm+' '),e=ty.startsWith('image')?document.createElement('img'):ty.startsWith('audio')?document.createElement('audio'):ty.startsWith('video')?document.createElement('video'):null;if(e){e.src=u;e.style.cssText='max-width:100%;display:block';if(e.tagName!='IMG')e.controls=true}const a=h('a','','⬇ yuklab olish');a.href=u;a.download=nm;d.append(a);if(e)d.append(e);lg.append(d);lg.scrollTop=1e9};
+fib.onclick=()=>fi.click();fi.onchange=async()=>{const f=fi.files[0];fi.value='';if(!f)return;if(f.size>25e6){add('25 MB dan katta fayl yuborilmaydi');return}const ab=await f.arrayBuffer();R.emit('file',{n:myN,name:f.name,type:f.type,ab});showFile(myN,f.name,f.type,new Blob([ab],{type:f.type}))};
+R.on('file',m=>showFile(m.data.n,m.data.name,m.data.type,new Blob([m.data.ab],{type:m.data.type})));
+/* Profil */
+{const pf=P[1],head=h('div','card'),grid=h('div','vg'),view=h('div','card'),bar=h('div','row'),up=h('input'),upb=h('button','',"➕ Video qo'yish");let tb=0;
+up.type='file';up.accept='video/*';up.style.display='none';view.style.display='none';head.style.cssText='display:flex;gap:16px;align-items:center';
+const subs=["Mening videolarim","Do'stlardan"].map((n,i)=>{const b=h('button',i?'g':'on',n);b.onclick=()=>{tb=i;view.style.display='none';PR()};return b});
+bar.append(...subs,upb);pf.append(head,bar,grid,view,up);upb.onclick=()=>up.click();
+up.onchange=async()=>{const f=up.files[0];up.value='';if(!f)return;if(f.size>60e6){alert("Video 60 MB dan kichik bo'lsin");return}const cap=prompt('Izoh (ixtiyoriy)')||'';await vPut({id:Date.now()+'-'+me,blob:f,cap,by:myN,mine:1,ts:Date.now(),likes:0,liked:0,cm:[]});tb=0;PR()};
+PR=async()=>{const all=(await vAll())||[],mn=all.filter(v=>v.mine).length,fr=LS('fr2').length;head.innerHTML='';const av=h('div','av',(myN[0]||'?').toUpperCase()),info=h('div'),nmb=h('b','',myN+' ✏️'),stt=h('div','row');nmb.style.cursor='pointer';nmb.onclick=()=>{const n=prompt('Ismingiz');if(n){myN=n;try{localStorage.setItem('nm',n)}catch(e){}PR()}};
+[[mn,'Video'],[fr,'Obunachilar'],[fr,'Obunalar']].forEach(([n,t])=>{const d=h('div','stat');d.append(h('b','',String(n)),h('div','mu',t));stt.append(d)});info.append(nmb,stt);head.append(av,info);
+subs.forEach((b,i)=>b.className=i==tb?'on':'g');grid.innerHTML='';
+all.filter(v=>!!v.mine==!tb).sort((a,b)=>b.ts-a.ts).forEach(v=>{const c=h('div','vt'),e=document.createElement('video');e.src=URL.createObjectURL(v.blob);e.muted=true;e.preload='metadata';c.append(e,h('span','','❤ '+v.likes));c.onclick=()=>show(v);grid.append(c)});
+if(!grid.children.length)grid.append(h('p','mu',tb?"Do'stlardan hali video kelmagan.":"Hali video yo'q. «Video qo'yish» ni bosing."))};
+function show(v){view.style.display='block';view.innerHTML='';const vd=document.createElement('video');vd.src=URL.createObjectURL(v.blob);vd.controls=true;vd.style.cssText='width:100%;max-height:60vh;border-radius:12px';
+const r=h('div','row'),lk=h('button','g',(v.liked?'❤️ ':'🤍 ')+v.likes),sh=h('button','g',"↗ Hammaga yuborish"),cl=h('button','g','✖ Yopish');
+lk.onclick=async()=>{v.liked=!v.liked;v.likes+=v.liked?1:-1;await vPut(v);show(v);PR()};
+sh.onclick=async()=>{if(v.blob.size>25e6){sh.textContent="25 MB dan katta yuborilmaydi";return}sh.textContent='⏳';R.emit('vid',{id:v.id,cap:v.cap,by:v.mine?myN:v.by,ts:v.ts,type:v.blob.type,ab:await v.blob.arrayBuffer()});sh.textContent='✅ Yuborildi'};
+cl.onclick=()=>{vd.pause();view.style.display='none'};r.append(lk,sh);
+if(v.mine){const dl=h('button','g',"🗑 O'chirish");dl.onclick=async()=>{await vDel(v.id);view.style.display='none';PR()};r.append(dl)}r.append(cl);
+const cm=h('div'),ci=h('input');v.cm.forEach(c=>cm.append(h('div','',c)));ci.placeholder='Izoh yozing (Enter)...';ci.onkeydown=async e=>{if(e.key=='Enter'&&ci.value){v.cm.push(myN+': '+ci.value);await vPut(v);show(v)}};
+view.append(h('b','',v.by+(v.cap?' — '+v.cap:'')),vd,r,cm,ci)}
+R.on('vid',async m=>{const d=m.data;await vPut({id:d.id+'-r',blob:new Blob([d.ab],{type:d.type}),cap:d.cap,by:d.by,mine:0,ts:d.ts,likes:0,liked:0,cm:[]});add('🎬 '+d.by+' video yubordi');PR()})}
+/* Ovoz */
+const cfg={iceServers:[{urls:'stun:stun.l.google.com:19302'}]},pcs={};let deaf=0;
+sp.onclick=()=>{deaf=!deaf;au.querySelectorAll('audio').forEach(a=>a.muted=deaf);sp.textContent=deaf?"🔇 Eshitish: o'chiq":'🔊 Eshitish: yoqiq'};
+function mk(x){const pc=pcs[x]=new RTCPeerConnection(cfg);pc.ontrack=e=>{let a=au.querySelector('[data-p="'+x+'"]');if(!a){a=document.createElement('audio');a.dataset.p=x;a.autoplay=true;a.muted=!!deaf;au.append(a)}a.srcObject=e.streams[0]};pc.onicecandidate=e=>{if(e.candidate)R.emit('sig',{c:e.candidate,f:me,to:x})};stream.getTracks().forEach(t=>pc.addTrack(t,stream));return pc}
+R.on('sig',async m=>{const d=m.data;if(d.f==me||(d.to&&d.to!=me))return;try{if(d.hi){if(stream){if(me<d.f){const pc=mk(d.f),o=await pc.createOffer();await pc.setLocalDescription(o);R.emit('sig',{o,f:me,to:d.f})}else R.emit('sig',{hi:1,f:me,to:d.f})}}else if(d.o){if(!stream)return;const pc=mk(d.f);await pc.setRemoteDescription(d.o);const a=await pc.createAnswer();await pc.setLocalDescription(a);R.emit('sig',{a,f:me,to:d.f})}else if(d.a){await pcs[d.f].setRemoteDescription(d.a)}else if(d.c&&pcs[d.f]){await pcs[d.f].addIceCandidate(d.c)}}catch(e){}});
+mic.onclick=async()=>{try{if(!stream){stream=await navigator.mediaDevices.getUserMedia({audio:true});R.emit('sig',{hi:1,f:me});mic.textContent="🎙 Mikrofon: yoqiq (o'chirish)"}else{const t=stream.getAudioTracks()[0];t.enabled=!t.enabled;mic.textContent=t.enabled?"🎙 Mikrofon: yoqiq (o'chirish)":"🔇 Mikrofon: o'chiq (yoqish)"}}catch(e){st.textContent='Mikrofonga ruxsat berilmadi'}}}
+$('#leave').onclick=()=>{opened=0;$('#sec').style.display='none';try{R&&R.leave();pc&&pc.close();stream&&stream.getTracks().forEach(t=>t.stop())}catch(e){}stream=pc=null;home()};
 $('#home').onclick=home;home();
 </script></body></html>
